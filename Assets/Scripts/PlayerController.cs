@@ -2,14 +2,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public const int MAX_HUNGER = 10;
+
     [SerializeField]
     private float _speed;
 
     private PlayerInputController _playerInputController;
+    private float _hunger;
 
     void Awake()
     {
         _playerInputController = GetComponent<PlayerInputController>();
+        _hunger = MAX_HUNGER;
+        InteractableBehavior.OnInteract += Interact;
+        InteractableBehavior.OnEndInteract += EndInteract;
     }
 
     void Update()
@@ -22,5 +28,29 @@ public class PlayerController : MonoBehaviour
             * _speed;
 
         transform.position += positionChange;
+    }
+
+    void Interact(float hungerCost)
+    {
+        _hunger -= hungerCost;
+        UIManager.Ins.UpdateHungerUI(_hunger);
+    }
+
+    void EndInteract()
+    {
+        if (_hunger <= 0)
+        {
+            ForceNextDay();
+            return;
+        }
+    }
+
+    void ForceNextDay()
+    {
+        Vector3 pos = InnBehavior.LastVisitedTeleportPoint.position;
+        transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+        _hunger = MAX_HUNGER;
+        UIManager.Ins.UpdateHungerUI(_hunger);
+        DayManager.Ins.NextDay();
     }
 }

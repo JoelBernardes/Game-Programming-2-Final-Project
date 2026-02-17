@@ -1,0 +1,80 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIManager : MonoBehaviour
+{
+    [SerializeField] Canvas _canvas;
+
+    [Header("Always Active")]
+    [SerializeField] TextMeshProUGUI _timeText;
+    [SerializeField] Slider _hungerSlider;
+
+    [Header("Sign")]
+    [SerializeField] GameObject _signParent;
+    [SerializeField] TextMeshProUGUI _signText;
+
+    [Header("Dialog")]
+    [SerializeField] GameObject _dialogParent;
+    [SerializeField] TextMeshProUGUI _dialogText;
+    [SerializeField] TextMeshProUGUI _dialogNameText;
+    [SerializeField] Image _dialogPortrait;
+
+    public bool Visible => _canvas.gameObject.activeInHierarchy;
+
+    public static UIManager Ins => _instance;
+    private static UIManager _instance;
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Debug.LogError($"Multiple instances of UIManager in scene, destroying component on {gameObject.name}");
+            Destroy(this);
+            return;
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+
+    void Start()
+    {
+        UpdateTimeUI();
+        _hungerSlider.maxValue = PlayerController.MAX_HUNGER;
+        _hungerSlider.value = PlayerController.MAX_HUNGER;
+    }
+
+    public void Show(bool show)
+    {
+        _canvas.gameObject.SetActive(show);
+    }
+
+    public void UpdateTimeUI()
+    {
+        _timeText.text = $"DAY {DayManager.Ins.Day}, HOUR {DayManager.Ins.Hour}";
+    }
+
+    public void UpdateHungerUI(float hunger)
+    {
+        _hungerSlider.value = hunger;
+    }
+
+    public void ShowSign(bool show, string message = "")
+    {
+        if (show) _signText.SetText(message);
+        _signParent.SetActive(show);
+    }
+
+    public void ShowDialog(bool show, string npcName = "Name", string dialog = "Dialog", Sprite portrait = null)
+    {
+        if (show)
+        {
+            _dialogText.SetText(dialog);
+            _dialogNameText.SetText(npcName);
+            _dialogPortrait.sprite = portrait;
+        }
+        _dialogParent.SetActive(show);
+    }
+}

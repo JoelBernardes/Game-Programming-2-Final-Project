@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
 
     private List<Slot> inventorySlots = new List<Slot>();
 
-    private void Awawke()
+    private void Awake()
     {
         inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>());
     }
@@ -80,6 +80,31 @@ public class Inventory : MonoBehaviour
         if (remaining > 0)
         {
             Debug.Log("Inventory is full, could not add " + remaining + " of " + itemToAdd.itemName);
+        }
+    }
+
+    public List<Slot> OccupiedSlots()
+    {
+        List<Slot> occupied = new();
+        foreach (var s in inventorySlots)
+        {
+            if (s.HasItem()) occupied.Add(s);
+        }
+        return occupied;
+    }
+
+    // I have not tested this
+    public void RemoveRandomItems(int amount)
+    {
+        var occupiedSlots = OccupiedSlots();
+
+        for (int i = 0; i < amount; i++)
+        {
+            Slot randomSlot = occupiedSlots[Random.Range(0, occupiedSlots.Count)];
+            if (randomSlot.RemoveAmount(1) <= 0)
+            {
+                occupiedSlots.Remove(randomSlot);
+            }
         }
     }
 }
