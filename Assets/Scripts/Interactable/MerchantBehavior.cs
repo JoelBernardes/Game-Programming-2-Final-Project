@@ -7,8 +7,8 @@ public class MerchantBehavior : InteractableBehavior
 
     public override void Interact()
     {
-        UIManager.Ins.ShowMerchantInventory(true, itemsForSale);
         // this is so messy must fix
+        UIManager.Ins.ShowMerchantInventory(true, itemsForSale);
         base.Interact();
     }
 

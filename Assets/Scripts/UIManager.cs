@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] Canvas _canvas;
+    [SerializeField] MenuController _menuController;
 
     [Header("Always Active")]
     [SerializeField] TextMeshProUGUI _timeText;
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
     [Header("Inventory")]
     [SerializeField] public Inventory _merchantInventory;
     [SerializeField] public Inventory _playerInventory;
+    [SerializeField] public Inventory _playerStall;
 
     public bool Visible => _canvas.gameObject.activeInHierarchy;
 
@@ -96,6 +98,31 @@ public class UIManager : MonoBehaviour
             _merchantInventory.OnSlotInteract += _playerInventory.AddItem;
             _merchantInventory.OnSlotInteract += _merchantInventory.RemoveItem;
             _merchantInventory.gameObject.SetActive(true);
+        }
+    }
+
+    public void ShowPlayerStall(bool show)
+    {
+        Debug.Log("Show player stall");
+        if (!show)
+        {
+            _playerStall.OnSlotInteract -= _playerInventory.AddItem;
+            _playerStall.OnSlotInteract -= _playerStall.RemoveItem;
+            _playerInventory.OnSlotInteract -= _playerStall.AddItem;
+            _playerInventory.OnSlotInteract -= _playerInventory.RemoveItem;
+            _playerInventory.gameObject.SetActive(false);
+            _playerStall.gameObject.SetActive(false);
+            _menuController.enabled = true;
+        }
+        else
+        {
+            _playerStall.OnSlotInteract += _playerInventory.AddItem;
+            _playerStall.OnSlotInteract += _playerStall.RemoveItem;
+            _playerInventory.OnSlotInteract += _playerStall.AddItem;
+            _playerInventory.OnSlotInteract += _playerInventory.RemoveItem;
+            _playerInventory.gameObject.SetActive(true);
+            _playerStall.gameObject.SetActive(true);
+            _menuController.enabled = false;
         }
     }
 }
