@@ -87,12 +87,14 @@ public class UIManager : MonoBehaviour
         if (!show)
         {
             _merchantInventory.OnSlotInteract -= _playerInventory.AddItem;
+            _merchantInventory.OnSlotInteract -= _merchantInventory.RemoveItem;
             _merchantInventory.gameObject.SetActive(false);
         }
         else
         {
             _merchantInventory.SetInventory(items);
             _merchantInventory.OnSlotInteract += _playerInventory.AddItem;
+            _merchantInventory.OnSlotInteract += _merchantInventory.RemoveItem;
             _merchantInventory.gameObject.SetActive(true);
         }
     }

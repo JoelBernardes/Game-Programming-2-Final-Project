@@ -97,7 +97,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Buy",
+                    "name": "Item",
                     "type": "Button",
                     "id": "dd7f9369-9bd3-40d7-8259-fdee0e9c1f4a",
                     "expectedControlType": "",
@@ -506,11 +506,11 @@
                 {
                     "name": "",
                     "id": "59427921-0666-4ba3-92c4-948bd4a104df",
-                    "path": "<Keyboard>/b",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Buy",
+                    "action": "Item",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

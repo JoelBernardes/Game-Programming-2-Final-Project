@@ -88,6 +88,35 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public void RemoveItem(ItemSO itemToRemove, int amountToRemove)
+    {
+        int remaining = amountToRemove;
+
+        foreach (Slot slot in inventorySlots)
+        {
+            if (slot.HasItem() && slot.GetItem() == itemToRemove)
+            {
+                int currentAmount = slot.GetAmount();
+                if (currentAmount > remaining)
+                {
+                    slot.SetItem(itemToRemove, currentAmount - amountToRemove);
+                    remaining = 0;
+                }
+                else if (currentAmount <= amountToRemove)
+                {
+                    slot.ClearSlot();
+                    remaining -= currentAmount;
+                }
+                if (remaining == 0) return;
+            }
+        }
+
+        if (remaining >= 0)
+        {
+            Debug.LogError($"Tried to remove more {itemToRemove.name} than inventory contained");
+        }
+    }
+
     public List<Slot> OccupiedSlots()
     {
         List<Slot> occupied = new();

@@ -3711,7 +3711,7 @@ MonoBehaviour:
   itemToCollect: {fileID: 0}
   numberOfItem: 0
   inventorySlotParent: {fileID: 1266592049}
-  buyAction: {fileID: 1713888683}
+  itemAction: {fileID: 1852861637}
   inventorySlots:
   - {fileID: 1437130913}
   - {fileID: 829767631}
@@ -5986,6 +5986,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 589a5da89e356a34eb83eda0a11d712c, type: 3}
   m_PrefabInstance: {fileID: 1413267481}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1424411973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Item
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: dd7f9369-9bd3-40d7-8259-fdee0e9c1f4a
 --- !u!1001 &1437130911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8121,6 +8135,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 13f03016091dc2941892299f133a2062, type: 3}
   m_PrefabInstance: {fileID: 1840717952}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1852861637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/Item
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: dd7f9369-9bd3-40d7-8259-fdee0e9c1f4a
 --- !u!1001 &1853453329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9258,6 +9286,10 @@ PrefabInstance:
       propertyPath: buyAction
       value: 
       objectReference: {fileID: 1713888683}
+    - target: {fileID: 8580278079676625730, guid: 0fab6adb66e1149a5bb7176ce7711daf, type: 3}
+      propertyPath: itemAction
+      value: 
+      objectReference: {fileID: 1424411973}
     - target: {fileID: 8580278079676625730, guid: 0fab6adb66e1149a5bb7176ce7711daf, type: 3}
       propertyPath: interactAction
       value: 
