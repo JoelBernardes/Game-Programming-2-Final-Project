@@ -10,14 +10,14 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private ItemSO heldItem;
     private int itemAmount;
 
-    private Image iconImage;
-    private TextMeshProUGUI amountTxt;
+    [SerializeField] private Image iconImage;
+    [SerializeField] private TextMeshProUGUI amountTxt;
 
-    public void Awake()
-    {
-        iconImage = transform.GetChild(0).GetComponent<Image>();
-        amountTxt = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-    }
+    // public void Awake()
+    // {
+    //     iconImage = transform.GetChild(0).GetComponent<Image>();
+    //     amountTxt = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+    // }
 
     public ItemSO GetItem()
     {

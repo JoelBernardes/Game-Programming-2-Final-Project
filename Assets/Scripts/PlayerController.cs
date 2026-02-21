@@ -9,6 +9,12 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputController _playerInputController;
     private float _hunger;
+    private float _money = 0f;
+
+    public bool CanAfford(float cost)
+    {
+        return _money >= cost;
+    }
 
     void Awake()
     {

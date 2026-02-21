@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogBehavior : InteractableBehavior
 {
@@ -6,6 +7,7 @@ public class DialogBehavior : InteractableBehavior
     [TextArea(2, 10)]
     [SerializeField] string _dialog;
     [SerializeField] Sprite _portrait;
+    [SerializeField] InputActionReference _nextDialogAction;
 
     public override InteractableType Type => InteractableType.DIALOG;
 

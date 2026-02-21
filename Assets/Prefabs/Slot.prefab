@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slot
   hovering: 0
+  iconImage: {fileID: 5031255452876197550}
+  amountTxt: {fileID: 3607648243873393059}
 --- !u!1 &4355140582657250719
 GameObject:
   m_ObjectHideFlags: 0

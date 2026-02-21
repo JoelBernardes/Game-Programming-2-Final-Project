@@ -1,38 +1,43 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using System;
 
 public class Inventory : MonoBehaviour
 {
-
     public ItemSO itemToCollect;
     public int numberOfItem;
     public GameObject inventorySlotParent;
 
-    public InputActionReference interactAction;
+    public InputActionReference itemAction;
 
-    private List<Slot> inventorySlots = new List<Slot>();
+    [SerializeField] private List<Slot> inventorySlots = new List<Slot>();
 
-    private void Awake()
-    {
-        inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>());
-    }
+    public Action<ItemSO, int> OnSlotInteract;
+
+    // private void Awake()
+    // {
+    //     inventorySlots.AddRange(inventorySlotParent.GetComponentsInChildren<Slot>());
+    // }
 
     private void OnEnable()
     {
-        interactAction.action.performed += OnInteract;
-        interactAction.action.Enable();
+        itemAction.action.performed += OnInteract;
+        itemAction.action.Enable();
     }
 
     private void OnDisable()
     {
-        interactAction.action.performed -= OnInteract;
-        interactAction.action.Disable();
+        itemAction.action.performed -= OnInteract;
+        itemAction.action.Disable();
     }
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        AddItem(itemToCollect, numberOfItem);
+        Slot hoveredItem = GetHoveredItem();
+        if (hoveredItem == null || !hoveredItem.HasItem()) return;
+        OnSlotInteract?.Invoke(hoveredItem.GetItem(), hoveredItem.GetAmount());
+        // AddItem(itemToCollect, numberOfItem);
     }
 
     public void AddItem(ItemSO itemToAdd, int amount)
@@ -79,7 +84,7 @@ public class Inventory : MonoBehaviour
 
         if (remaining > 0)
         {
-            Debug.Log("Inventory is full, could not add " + remaining + " of " + itemToAdd.itemName);
+            Debug.Log($"{gameObject.name} Inventory is full, could not add " + remaining + " of " + itemToAdd.itemName);
         }
     }
 
@@ -93,14 +98,47 @@ public class Inventory : MonoBehaviour
         return occupied;
     }
 
-    // I have not tested this
+    public void SetInventory(ItemListing[] items)
+    {
+        if (items.Length > inventorySlots.Count)
+        {
+            Debug.LogWarning("More items than slots");
+        }
+
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            Slot s = inventorySlots[i];
+            if (i >= items.Length) s.ClearSlot();
+            else
+            {
+                ItemSO item = items[i].item;
+                int amount = items[i].amount;
+                s.SetItem(item, amount);
+            }
+        }
+    }
+
+    public Slot GetHoveredItem()
+    {
+        // TODO this is so inefficient
+        foreach (var slot in inventorySlots)
+        {
+            if (slot != null && slot.HasItem() && slot.hovering)
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    // I have not tested this (Marcella)
     public void RemoveRandomItems(int amount)
     {
         var occupiedSlots = OccupiedSlots();
 
         for (int i = 0; i < amount; i++)
         {
-            Slot randomSlot = occupiedSlots[Random.Range(0, occupiedSlots.Count)];
+            Slot randomSlot = occupiedSlots[UnityEngine.Random.Range(0, occupiedSlots.Count)];
             if (randomSlot.RemoveAmount(1) <= 0)
             {
                 occupiedSlots.Remove(randomSlot);

@@ -20,6 +20,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI _dialogNameText;
     [SerializeField] Image _dialogPortrait;
 
+    [Header("Inventory")]
+    [SerializeField] public Inventory _merchantInventory;
+    [SerializeField] public Inventory _playerInventory;
+
     public bool Visible => _canvas.gameObject.activeInHierarchy;
 
     public static UIManager Ins => _instance;
@@ -78,8 +82,18 @@ public class UIManager : MonoBehaviour
         _dialogParent.SetActive(show);
     }
 
-    public void ShowStall(bool show)
+    public void ShowMerchantInventory(bool show, ItemListing[] items = null)
     {
-
+        if (!show)
+        {
+            _merchantInventory.OnSlotInteract -= _playerInventory.AddItem;
+            _merchantInventory.gameObject.SetActive(false);
+        }
+        else
+        {
+            _merchantInventory.SetInventory(items);
+            _merchantInventory.OnSlotInteract += _playerInventory.AddItem;
+            _merchantInventory.gameObject.SetActive(true);
+        }
     }
 }
