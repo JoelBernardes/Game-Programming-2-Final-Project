@@ -12,8 +12,9 @@ public class PlayerInputController : MonoBehaviour
         MovementInputVector = inputValue.Get<Vector2>();
     }
 
-    private void OnUse(InputValue inputValue)
+    private void OnInteract()
     {
+        Debug.Log("OnInteract");
         InteractableBehavior interactable = _interactableMonitor.Interactable;
 
         if (_interactableMonitor.Interacting)

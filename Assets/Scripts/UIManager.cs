@@ -77,4 +77,9 @@ public class UIManager : MonoBehaviour
         }
         _dialogParent.SetActive(show);
     }
+
+    public void ShowStall(bool show)
+    {
+
+    }
 }
